@@ -5,14 +5,12 @@ NX (No-execute) is a memory protection feature that prevents execution of code i
 
 In this short experiment, I used gdb to observe how NX affects a simple buffer overflow attempt.
 
----
 
 ## Setup
 - OS: Linux (WSL / Kali)
 - Tool: gdb
 - Target: simple vulnerable C program
 
----
 
 ## Experiment
 
