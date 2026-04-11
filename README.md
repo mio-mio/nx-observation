@@ -25,6 +25,7 @@ This experiment highlights a key limitation of classic stack-based exploitation 
 Below is the test program:
 
 <Screenshot of C program>
+  
 ### Case 1: NX Disabled — Code Execution Succeeds
 ### Case 2: NX Enabled — Execution Blocked
 
