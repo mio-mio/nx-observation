@@ -23,11 +23,19 @@ The goal is to compare what happens when execution from the stack is allowed ver
 This experiment highlights a key limitation of classic stack-based exploitation techniques.
 
 Below is the test program:
-
-<Screenshot of C program>
+![Screenshot of vulnerable C program](C_Screenshot2026-04-12091033.png)
   
 ### Case 1: NX Disabled — Code Execution Succeeds
+
+When NX is disabled, we can observe this state with info proc mappings in GDB. As following schreenshot, permission for stack is including execution (x).
+
 ### Case 2: NX Enabled — Execution Blocked
+
+When we check with info proc mapping in GDB, permission for stack is not including execution (x).
+
+![Screenshot of NX Enabled](WNXScreenshot2026-04-12093809.png)
+
+
 
 ## 4. Why the Attack Fails
 
