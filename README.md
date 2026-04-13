@@ -33,9 +33,9 @@ I first examined both binaries using the `checksec` tool.
 
 In the non-nx binary, the NX status was reported as "NX unknown - GNU_STACK missing".
 
-![Screenshot of With NX checksec result](gazou.png
+![Screenshot of With NX checksec result](WNXChecksecScreenshot2026-04-13175849.png)
 
-![Screenshot of Without NX checksec result](gazou.png
+![Screenshot of Without NX checksec result](NONNXChecksecScreenshot2026-04-13175840.png)
 
 Next, I inspected the runtime memory layout using `info proc mappings` in GDB. The stack is mapped without execute permissions (no "x" flag) when inspecting the file with NX.
 ![Screenshot of With NX](WNXScreenshot2026-04-12093809.png)
