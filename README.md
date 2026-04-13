@@ -67,7 +67,7 @@ To prepare the payload, I identified the stack address and calculated the offset
 The following Python script was used to generate the payload.
 
 
-![Screenshot of payload.py](.png)
+![Screenshot of payload_maker.py](PayloadScreenshot2026-04-13195732.png)
 
 #### 3.2.3 Observation
 
