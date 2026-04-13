@@ -25,15 +25,30 @@ This experiment highlights a key limitation of classic stack-based exploitation 
 Below is the test program:
 ![Screenshot of vulnerable C program](CScreenshot2026-04-13122219.png)
   
-### 3.1 Checking Memory Permissions
+### 3.1 Static vs. Dynamic Observation
 
-When NX is disabled, we can observe this state with `info proc mappings` in GDB. As following schreenshot, permission for stack is including execution (x).
+After compiling the program with and without NX, the binaries were named wnx and non-nx.
 
-![Screenshot of NX Disabled](NONNXScreenshot2026-04-13114032.png)
+I first examined both binaries using the `checksec` tool.
 
-When NX is enabled, we can check with `info proc mapping` in GDB, permission for stack is not including execution (x).
+In the non-nx binary, the NX status was reported as "NX unknown - GNU_STACK missing".
 
-![Screenshot of NX Enabled](WNXScreenshot2026-04-12093809.png)
+![Screenshot of With NX checksec result](gazou.png
+
+![Screenshot of Without NX checksec result](gazou.png
+
+Next, I inspected the runtime memory layout using `info proc mappings` in GDB. The stack is mapped without execute permissions (no "x" flag) when inspecting the file with NX.
+![Screenshot of With NX](WNXScreenshot2026-04-12093809.png)
+
+The stack is mapped as executable (with the "x" flag) when inspecting the file without NX.
+
+![Screenshot of Without NX](NONNXScreenshot2026-04-13114032.png)
+
+
+Although the static analysis reported the NX status as unknown, runtime inspection showed that the stack was mapped as executable.
+
+This indicates that actual memory permissions are determined at runtime and may not always be accurately reflected by static analysis alone.
+
 
 ### 3.2 Attempt to Execute Code on the Stack
 
