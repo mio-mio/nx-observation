@@ -37,13 +37,13 @@ When NX is enabled, we can check with `info proc mapping` in GDB, permission for
 
 ### 3.2 Attempt to Execute Code on the Stack
 
-To observe how NX actually works, I attempted to execute code on the stack by redirecting control flow to a region filled with NOP instructions.
+To observe how NX actually works, I attempted to execute code on the stack by redirecting control flow to a region of user-controlled data.
 
-Although the instruction pointer was redirected to the stack, the instruction at that location (in this case, a ret instruction) could not be executed.
+Although the instruction pointer was successfully redirected to the stack, the instruction at that location (in this case, a ret instruction) could not be executed.
 
 The program immediately terminated with a segmentation fault, indicating that execution from the stack is prohibited.
 
-In this environment, it was not possible to observe successful execution with NX disabled, which reflects the behavior of modern systems where such protections are enforced consistently.
+In this environment, it was not possible to observe successful execution with NX disabled, which reflects the behavior of modern systems where such protections are consistently enforced.
 
 ![Screenshot of sigsegv](sigsegvScreenshot2026-04-13121806.png)
 
