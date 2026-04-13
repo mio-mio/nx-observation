@@ -53,14 +53,14 @@ This indicates that actual memory permissions are determined at runtime and may 
 
 ### 3.2 Attempt to Execute Code on the Stack
 
-#### Goal
+#### 3.2.1 Goal
 
 The goal of this experiment is to observe what happens when control flow is redirected to the stack, and to understand how modern protections affect execution.
 
 This highlights a key limitation of classic stack-based exploitation techniques.
 
 
-#### Setup
+#### 3.2.2 Setup
 
 To prepare the payload, I identified the stack address and calculated the offset required to overwrite the return address.
 
@@ -69,7 +69,7 @@ The following Python script was used to generate the payload.
 
 ![Screenshot of payload.py](.png)
 
-#### Observation
+#### 3.2.3 Observation
 
 The wnx binary was executed in GDB using the generated payload.
 
@@ -83,7 +83,7 @@ This indicates that the program attempts to execute code from the stack, but fai
 
 Interestingly, the same behavior was observed in the non-nx binary.
 
-#### Interpretation
+#### 3.2.4 Interpretation
 
 This experiment shows that control flow hijacking is still possible, as the instruction pointer can be redirected to arbitrary memory locations.
 
