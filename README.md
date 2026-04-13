@@ -8,7 +8,7 @@ One of the most fundamental protections is NX (No-eXecute), which prevents certa
 
 ## 2. What NX Actually Does
 
-NX (No-eXecute), also known as Data Execution Prevention (DEP), is a memory protection mechanism that prevents execution of code from non-executable regions such as the stack.
+NX, also known as Data Execution Prevention (DEP), is a memory protection mechanism that prevents execution of code from non-executable regions such as the stack.
 
 This means that even if an attacker successfully overwrites memory and injects shellcode, the CPU will refuse to execute it.
 
@@ -50,17 +50,48 @@ Although the static analysis reported the NX status as unknown, runtime inspecti
 This indicates that actual memory permissions are determined at runtime and may not always be accurately reflected by static analysis alone.
 
 
+
 ### 3.2 Attempt to Execute Code on the Stack
 
-To observe how NX actually works, I attempted to execute code on the stack by redirecting control flow to a region of user-controlled data.
+#### Goal
 
-Although the instruction pointer was successfully redirected to the stack, the instruction at that location (in this case, a ret instruction) could not be executed.
+The goal of this experiment is to observe what happens when control flow is redirected to the stack, and to understand how modern protections affect execution.
 
-The program immediately terminated with a segmentation fault, indicating that execution from the stack is prohibited.
+This highlights a key limitation of classic stack-based exploitation techniques.
 
-In this environment, it was not possible to observe successful execution with NX disabled, which reflects the behavior of modern systems where such protections are consistently enforced.
+
+#### Setup
+
+To prepare the payload, I identified the stack address and calculated the offset required to overwrite the return address.
+
+The following Python script was used to generate the payload.
+
+
+![Screenshot of payload.py](.png)
+
+#### Observation
+
+The wnx binary was executed in GDB using the generated payload.
+
+By placing a breakpoint at the vuln function, it was possible to observe the program state immediately before and after the payload was processed.
 
 ![Screenshot of sigsegv](sigsegvScreenshot2026-04-13121806.png)
+
+At the moment of the crash, the stack clearly contains injected data (0x90 bytes), and the return instruction is about to transfer control to this region.
+
+This indicates that the program attempts to execute code from the stack, but fails immediately with a segmentation fault.
+
+Interestingly, the same behavior was observed in the non-nx binary.
+
+#### Interpretation
+
+This experiment shows that control flow hijacking is still possible, as the instruction pointer can be redirected to arbitrary memory locations.
+
+However, execution from the stack is not reliably possible in this environment.
+
+Even when the stack appears executable at runtime, modern systems may enforce additional constraints that prevent successful execution.
+
+This demonstrates that classic stack-based code injection techniques are no longer reliable on modern systems.
 
 
 ## 4. Why the Attack Fails
