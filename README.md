@@ -23,7 +23,7 @@ The goal is to compare what happens when execution from the stack is allowed ver
 This experiment highlights a key limitation of classic stack-based exploitation techniques.
 
 Below is the test program:
-![Screenshot of vulnerable C program](C_Screenshot2026-04-12091033.png)
+![Screenshot of vulnerable C program](CScreenshot2026-04-13122219.png)
   
 ### 3.1 Checking Memory Permissions
 
@@ -45,7 +45,7 @@ The program immediately terminated with a segmentation fault, indicating that ex
 
 In this environment, it was not possible to observe successful execution with NX disabled, which reflects the behavior of modern systems where such protections are enforced consistently.
 
-![Screenshot of sigsegv](sigsegvScreenshot.png)
+![Screenshot of sigsegv](sigsegvScreenshot2026-04-13121806.png)
 
 
 ## 4. Why the Attack Fails
