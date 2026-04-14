@@ -18,8 +18,6 @@ NX is typically enabled at compile time and enforced at runtime, and its effect 
 
 To understand how NX affects exploitation, I prepared a simple vulnerable C program and observed its behavior under different configurations.
 
-The goal is to compare what happens when execution from the stack is allowed versus when it is blocked.
-
 This experiment highlights a key limitation of classic stack-based exploitation techniques.
 
 Below is the test program:
@@ -96,12 +94,37 @@ This demonstrates that classic stack-based code injection techniques are no long
 
 ## 4. Why the Attack Fails
 
+The reason the attack fails is not because control flow cannot be taken over, but because execution is not allowed at the target location.
 
+In this experiment, we were able to observe that control flow was successfully hijacked by redirecting the instruction pointer to the stack.
+
+However, in modern systems, execution from the stack is prevented even when the memory appears to be executable.
+
+This distinction is important. Gaining control does not guarantee the ability to execute arbitrary code.
+
+This is why classic techniques such as shellcode injection no longer work reliably in modern systems.
 
 ## 5. What Comes Next: Bypassing NX
 
+Although NX is a strong defense mechanism, it is not a complete solution.
 
+There are well-known techniques to bypass NX, such as Return-Oriented Programming (ROP) and return-to-libc.
+
+ROP allows attackers to achieve arbitrary behavior by chaining together small pieces of existing code, called gadgets, without injecting new code.
+
+Similarly, return-to-libc achieves code execution by reusing functions from the standard C library.
+
+These techniques build on the limitation observed in this experiment.
+
+I plan to explore them in more detail in a future post.
 
 ## 6. Key Insight
 
+NX is one of the fundamental defense mechanisms that prevents certain memory regions from being executed as code.
+
 ## 7. What I Learned
+
+- Static and dynamic analysis do not always produce the same results.
+- Memory permissions are ultimately determined at runtime.
+- Actual NX behavior can be difficult to observe directly in modern environments.
+  
