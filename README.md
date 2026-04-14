@@ -1,4 +1,4 @@
-# Understanding NX Through Exploitation: Why ret2win Stops Working
+# Understanding NX Through Exploitation: Why ret2win Fails on Modern Systems
 
 ## 1. From ret2win to Its Limitations
 
@@ -94,7 +94,7 @@ This demonstrates that classic stack-based code injection techniques are no long
 
 ## 4. Why the Attack Fails
 
-The reason the attack fails is not because control flow cannot be taken over, but because execution is not allowed at the target location.
+The reason the attack fails is not because control flow cannot be taken over, but because execution is not relaiable at the target location.
 
 In this experiment, we were able to observe that control flow was successfully hijacked by redirecting the instruction pointer to the stack.
 
@@ -112,9 +112,11 @@ There are well-known techniques to bypass NX, such as Return-Oriented Programmin
 
 ROP allows attackers to achieve arbitrary behavior by chaining together small pieces of existing code, called gadgets, without injecting new code.
 
-Similarly, return-to-libc achieves code execution by reusing functions from the standard C library.
+Similarly, return-to-libc achieves code execution by reusing functions from the standard C library.　
 
 These techniques build on the limitation observed in this experiment.
+
+This shift from code injection to code reuse represents a fundamental change in modern exploitation techniques.
 
 I plan to explore them in more detail in a future post.
 
@@ -127,4 +129,3 @@ NX is one of the fundamental defense mechanisms that prevents certain memory reg
 - Static and dynamic analysis do not always produce the same results.
 - Memory permissions are ultimately determined at runtime.
 - Actual NX behavior can be difficult to observe directly in modern environments.
-  
